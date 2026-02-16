@@ -2,61 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Employee Onboarding Page</title>
+    <title>Restaurant Menu</title>
 </head>
 <body>
-    <h1 align="center" title="New Employee Registration">Employee Onboarding Form</h1>
-    <p align="center">Please fill in the details below to complete your onboarding process.</p>
+    <!-- 1. Restaurant Name (Heading) -->
+    <h1 align="center" title="Welcome to our Restaurant">Spice Delight Restaurant</h1>
 
-    <form align="center">
-        <table align="center" cellpadding="10">
-            <!-- Full Name -->
-            <tr>
-                <td><label>Full Name:</label></td>
-                <td><input type="text" placeholder="Enter Full Name" required></td>
-            </tr>
+    <!-- 2. About the Restaurant (Paragraph) -->
+    <p align="center">Welcome to Spice Delight! We serve the most authentic and delicious dishes made with fresh ingredients. Our mission is to provide a memorable dining experience for every guest.</p>
 
-            <!-- Email Address -->
-            <tr>
-                <td><label>Email Address:</label></td>
-                <td><input type="email" placeholder="Enter Email" required></td>
-            </tr>
+    <!-- 3. Menu Categories (Unordered List) -->
+    <h3>Menu Categories</h3>
+    <ul>
+        <li>Breakfast</li>
+        <li>Main Course</li>
+        <li>Beverages</li>
+        <li>Desserts</li>
+    </ul>
 
-            <!-- Gender Selection -->
-            <tr>
-                <td><label>Gender:</label></td>
-                <td>
-                    <input type="radio" name="gender" value="male"> Male
-                    <input type="radio" name="gender" value="female"> Female
-                </td>
-            </tr>
-
-            <!-- Department Selection -->
-            <tr>
-                <td><label>Department:</label></td>
-                <td>
-                    <select>
-                        <option value="it">IT Department</option>
-                        <option value="hr">Human Resources</option>
-                        <option value="finance">Finance</option>
-                        <option value="marketing">Marketing</option>
-                    </select>
-                </td>
-            </tr>
-
-            <!-- Date of Joining -->
-            <tr>
-                <td><label>Date of Joining:</label></td>
-                <td><input type="date" required></td>
-            </tr>
-
-            <!-- Submit Button -->
-            <tr>
-                <td colspan="2" align="center">
-                    <button type="submit" title="Click to Submit">Submit Onboarding Details</button>
-                </td>
-            </tr>
-        </table>
-    </form>
+    <!-- 4. Price List (Table) -->
+    <h3>Price List</h3>
+    <table border="1" align="center" width="50%">
+        <tr>
+            <th>Item Name</th>
+            <th>Category</th>
+            <th>Price (₹)</th>
+        </tr>
+        <tr>
+            <td>Paneer Butter Masala</td>
+            <td>Main Course</td>
+            <td>220</td>
+        </tr>
+        <tr>
+            <td>Veg Biryani</td>
+            <td>Main Course</td>
+            <td>180</td>
+        </tr>
+        <tr>
+            <td>Masala Dosa</td>
+            <td>Breakfast</td>
+            <td>90</td>
+        </tr>
+        <tr>
+            <td>Cold Coffee</td>
+            <td>Beverages</td>
+            <td>120</td>
+        </tr>
+    </table>
 </body>
 </html>
