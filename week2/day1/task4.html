@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker (Web SQL)</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; max-width: 500px; }
+        .input-group { margin-bottom: 10px; }
+        input { width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box; }
+        button { padding: 10px; margin: 5px 0; cursor: pointer; width: 100%; }
+        .add-btn { background-color: #28a745; color: white; border: none; }
+        .view-btn { background-color: #007bff; color: white; border: none; }
+        .delete-btn { background-color: #dc3545; color: white; border: none; padding: 5px; width: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <h2>Mini Expense Tracker</h2>
+
+    <div class="input-group">
+        <label>Expense Title:</label>
+        <input type="text" id="title" placeholder="e.g., Groceries">
+    </div>
+    <div class="input-group">
+        <label>Amount:</label>
+        <input type="number" id="amount" placeholder="e.g., 500">
+    </div>
+    <div class="input-group">
+        <label>Date:</label>
+        <input type="date" id="date">
+    </div>
+
+    <button class="add-btn" onclick="addExpense()">Add Expense</button>
+    <button class="view-btn" onclick="viewExpenses()">View Expenses</button>
+
+    <table id="expenseTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="expenseList"></tbody>
+    </table>
+
+    <script>
+        // Requirement 3 & 4: Initialize Web SQL Database
+        // Technical Constraint: Client-side DB transactions
+        var db = openDatabase('ExpenseDB', '1.0', 'Test DB', 2 * 1024 * 1024);
+
+        // Requirement 4: Execute SQL-like query (CREATE TABLE)
+        db.transaction(function (tx) {
+            tx.executeSql('CREATE TABLE IF NOT EXISTS EXPENSES (id INTEGER PRIMARY KEY AUTOINCREMENT, title, amount, date)', 
+            [], null, errorHandler);
+        });
+
+        // Requirement 4: Execute SQL-like query (INSERT)
+        function addExpense() {
+            const title = document.getElementById('title').value;
+            const amount = document.getElementById('amount').value;
+            const date = document.getElementById('date').value;
+
+            if (!title || !amount || !date) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            db.transaction(function (tx) {
+                tx.executeSql('INSERT INTO EXPENSES (title, amount, date) VALUES (?, ?, ?)', [title, amount, date], function() {
+                    alert("Expense Added!");
+                    document.getElementById('title').value = '';
+                    document.getElementById('amount').value = '';
+                    document.getElementById('date').value = '';
+                    viewExpenses(); // Auto-refresh list
+                }, errorHandler);
+            });
+        }
+
+        // Requirement 4: Execute SQL-like query (SELECT)
+        // Requirement 6: Display expense list dynamically
+        function viewExpenses() {
+            db.transaction(function (tx) {
+                tx.executeSql('SELECT * FROM EXPENSES', [], function (tx, results) {
+                    const list = document.getElementById('expenseList');
+                    list.innerHTML = ''; // Clear current list
+                    
+                    for (let i = 0; i < results.rows.length; i++) {
+                        const row = results.rows.item(i);
+                        list.innerHTML += `<tr>
+                            <td>${row.title}</td>
+                            <td>${row.amount}</td>
+                            <td>${row.date}</td>
+                            <td><button class="delete-btn" onclick="deleteExpense(${row.id})">Delete</button></td>
+                        </tr>`;
+                    }
+                }, errorHandler);
+            });
+        }
+
+        // Requirement 4: Execute SQL-like query (DELETE)
+        function deleteExpense(id) {
+            db.transaction(function (tx) {
+                tx.executeSql('DELETE FROM EXPENSES WHERE id=?', [id], function() {
+                    viewExpenses();
+                }, errorHandler);
+            });
+        }
+
+        // Technical Constraint: Handle Transaction and Query errors
+        function errorHandler(tx, error) {
+            console.error("Database Error: " + error.message);
+            alert("An error occurred with the database transaction.");
+        }
+
+        // Load data on start
+        window.onload = viewExpenses;
+    </script>
+
+</body>
+</html>

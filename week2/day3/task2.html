@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Toggle Application</title>
+    <style>
+        /* CSS for Smooth Transitions */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.4s, color 0.4s;
+        }
+
+        /* Light Mode Styles */
+        body.light-mode {
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px;
+            border: 2px solid #555;
+            background-color: transparent;
+            color: inherit; /* Matches the text color of the theme */
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+    <div class="container">
+        <h1>Theme Switcher</h1>
+        <p>Click below to change the website theme.</p>
+        <button id="themeToggleBtn">Switch to Dark Mode</button>
+    </div>
+
+    <script>
+        // Select elements
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const bodyElement = document.body;
+
+        // 1. Check localStorage on page load to see if a theme was saved
+        const savedTheme = localStorage.getItem('themePreference');
+
+        if (savedTheme) {
+            bodyElement.className = savedTheme;
+            updateButtonText(savedTheme);
+        }
+
+        // 2. Add Event Listener for the button click
+        themeBtn.addEventListener('click', function() {
+            // Determine the new theme
+            let newTheme;
+            if (bodyElement.classList.contains('light-mode')) {
+                newTheme = 'dark-mode';
+            } else {
+                newTheme = 'light-mode';
+            }
+
+            // Apply the new theme class to the body
+            bodyElement.className = newTheme;
+
+            // 3. Store the preference in localStorage
+            localStorage.setItem('themePreference', newTheme);
+
+            // Update the button text
+            updateButtonText(newTheme);
+        });
+
+        // Function to update the button label based on current theme
+        function updateButtonText(theme) {
+            if (theme === 'dark-mode') {
+                themeBtn.textContent = "Switch to Light Mode";
+            } else {
+                themeBtn.textContent = "Switch to Dark Mode";
+            }
+        }
+    </script>
+
+</body>
+</html>
