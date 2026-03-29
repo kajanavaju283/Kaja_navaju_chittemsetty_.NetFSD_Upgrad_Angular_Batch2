@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic FAQ Section</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4; }
+        .faq-container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        
+        .faq-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
+        
+        /* Question Style */
+        .question { font-weight: bold; cursor: pointer; padding: 10px; background: #e9ecef; border-radius: 5px; transition: background 0.3s; }
+        .question:hover { background: #dee2e6; }
+        
+        /* Answer Style - Hidden by default */
+        .answer { display: none; padding: 10px; color: #555; border-left: 3px solid #007bff; margin-top: 5px; }
+        
+        /* Highlight class for selected question */
+        .active-question { background-color: #007bff !important; color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="faq-container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <div class="question">What is jQuery?</div>
+            <div class="answer">jQuery is a fast, small, and feature-rich JavaScript library that makes HTML document traversal and manipulation easier.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">How do I include jQuery in my project?</div>
+            <div class="answer">You can include it via a CDN link in your HTML head section or by downloading the file locally.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">What does .slideToggle() do?</div>
+            <div class="answer">It animates the height of the matched elements, causing them to slide up or down to show or hide content.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Is jQuery still relevant in 2024?</div>
+            <div class="answer">Yes, many legacy systems and popular CMS platforms like WordPress still rely heavily on jQuery.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">What is DOM manipulation?</div>
+            <div class="answer">It is the process of using scripts to change the document structure, style, and content dynamically.</div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Using jQuery click() event to toggle answers
+            $('.question').click(function() {
+                // Apply slideToggle() to the next element (the answer)
+                $(this).next('.answer').slideToggle(300);
+
+                // Highlight the selected question using CSS class manipulation
+                $(this).toggleClass('active-question');
+
+                // Optional: Close other open answers (Accordion style)
+                // $('.answer').not($(this).next()).slideUp();
+                // $('.question').not($(this)).removeClass('active-question');
+            });
+        });
+    </script>
+
+</body>
+</html>

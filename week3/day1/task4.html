@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive To-Do List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; padding: 30px; background-color: #f0f2f5; }
+        .todo-container { max-width: 450px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        /* Stats Section */
+        .stats { margin-bottom: 20px; font-weight: bold; color: #555; display: flex; justify-content: space-between; }
+        
+        /* Input Area */
+        .input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        #addBtn { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; }
+
+        /* List Items */
+        ul { list-style: none; padding: 0; }
+        li { background: #fff; border: 1px solid #eee; margin-bottom: 8px; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-radius: 5px; }
+        
+        /* Requirement: Strike-through effect for completed tasks */
+        .completed { text-decoration: line-through; color: #888; background-color: #f9f9f9; }
+        
+        .task-text { cursor: pointer; flex: 1; }
+        .delete-btn { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="todo-container">
+    <h2>My To-Do List</h2>
+    
+    <div class="stats">
+        <span>Total Tasks: <span id="totalCount">0</span></span>
+        <span>Completed: <span id="completedCount">0</span></span>
+    </div>
+
+    <div class="input-group">
+        <input type="text" id="taskInput" placeholder="What needs to be done?">
+        <button id="addBtn">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+</div>
+
+<script>
+$(document).ready(function() {
+    
+    // Function to update the counts dynamically
+    function updateCounts() {
+        let total = $('#taskList li').length;
+        let completed = $('#taskList li.completed').length;
+        $('#totalCount').text(total);
+        $('#completedCount').text(completed);
+    }
+
+    // Add button click event
+    $('#addBtn').on('click', function() {
+        let taskValue = $('#taskInput').val().trim();
+        
+        if (taskValue !== "") {
+            // Requirement: Use append() to insert tasks
+            let taskItem = `
+                <li>
+                    <span class="task-text">${taskValue}</span>
+                    <button class="delete-btn">Delete</button>
+                </li>`;
+            
+            $('#taskList').append(taskItem);
+            $('#taskInput').val(""); // Clear input
+            updateCounts();
+        }
+    });
+
+    // Requirement: Mark tasks as completed (strike-through effect)
+    // Using event delegation with .on() for dynamic elements
+    $('#taskList').on('click', '.task-text', function() {
+        $(this).parent().toggleClass('completed');
+        updateCounts();
+    });
+
+    // Requirement: Provide a delete button for each task
+    $('#taskList').on('click', '.delete-btn', function() {
+        $(this).parent().remove(); // Use remove() method
+        updateCounts();
+    });
+});
+</script>
+
+</body>
+</html>
