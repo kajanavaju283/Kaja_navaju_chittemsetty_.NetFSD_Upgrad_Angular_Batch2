@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Feedback Page</title>
+    <style>
+        /* CSS for Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #feedbackBtn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #feedbackBtn:hover {
+            background-color: #218838;
+        }
+
+        #confirmationMessage {
+            margin-top: 20px;
+            color: #155724;
+            font-weight: 600;
+            min-height: 24px; /* Prevents layout jump */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Startup Feedback</h2>
+        <button id="feedbackBtn">Submit Feedback</button>
+        <p id="confirmationMessage"></p>
+    </div>
+
+    <script>
+        // JavaScript for Interactivity
+        // 1. Select the elements
+        const button = document.getElementById('feedbackBtn');
+        const displayDiv = document.getElementById('confirmationMessage');
+
+        // 2. Add the Click Event Listener
+        button.addEventListener('click', function() {
+            // 3. Update the DOM dynamically
+            displayDiv.textContent = "✔ Thank you! Your feedback has been submitted.";
+            
+            // Optional: Disable button after click
+            button.disabled = true;
+            button.style.backgroundColor = "#ccc";
+            button.style.cursor = "not-allowed";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic To-Do List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .todo-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #addBtn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        /* Style for completed tasks */
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="todo-card">
+        <h2>My Tasks</h2>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addBtn">Add</button>
+        </div>
+        <ul id="taskList">
+            </ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById('taskInput');
+        const addBtn = document.getElementById('addBtn');
+        const taskList = document.getElementById('taskList');
+
+        // Function to create and add a task
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            if (taskText === "") return;
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span class="task-text">${taskText}</span>
+                <button class="delete-btn">Delete</button>
+            `;
+            
+            taskList.appendChild(li);
+            taskInput.value = ""; // Clear input
+        }
+
+        // --- Event Delegation ---
+        // Instead of adding listeners to every button, we listen on the <ul>
+        taskList.addEventListener('click', (event) => {
+            // 1. Mark as completed (if clicking the text)
+            if (event.target.classList.contains('task-text')) {
+                event.target.classList.toggle('completed');
+            }
+
+            // 2. Delete task (if clicking the delete button)
+            if (event.target.classList.contains('delete-btn')) {
+                event.target.parentElement.remove();
+            }
+        });
+
+        // Click Add Button
+        addBtn.addEventListener('click', addTask);
+
+        // Allow pressing "Enter" key to add task
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+    </script>
+</body>
+</html>
