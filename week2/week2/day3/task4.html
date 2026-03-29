@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .search-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 { text-align: center; color: #333; }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: #007bff; }
+        .product-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .product-item {
+            padding: 10px;
+            border-bottom: 1px solid #f1f1f1;
+            color: #555;
+        }
+        .no-results {
+            color: #dc3545;
+            text-align: center;
+            font-weight: bold;
+            display: none; /* Hidden by default */
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-card">
+        <h2>Product Search</h2>
+        <input type="text" id="searchInput" placeholder="Search products (e.g., iPhone)...">
+        
+        <ul id="productList" class="product-list">
+            </ul>
+        
+        <p id="noResults" class="no-results">No Results Found</p>
+    </div>
+
+    <script>
+        // --- 1. Predefined Product Data ---
+        const products = [
+            "iPhone 15 Pro",
+            "Samsung Galaxy S24",
+            "MacBook Air M3",
+            "Sony WH-1000XM5",
+            "Apple Watch Ultra",
+            "Nintendo Switch OLED",
+            "Dell XPS 13",
+            "Logitech MX Master 3S"
+        ];
+
+        // --- 2. Element Selectors ---
+        const searchInput = document.getElementById('searchInput');
+        const productList = document.getElementById('productList');
+        const noResults = document.getElementById('noResults');
+
+        // --- 3. Modular Function to Display List ---
+        function renderList(filteredProducts) {
+            // Clear current list
+            productList.innerHTML = "";
+
+            if (filteredProducts.length === 0) {
+                noResults.style.display = "block";
+            } else {
+                noResults.style.display = "none";
+                filteredProducts.forEach(product => {
+                    const li = document.createElement('li');
+                    li.className = "product-item";
+                    li.textContent = product;
+                    productList.appendChild(li);
+                });
+            }
+        }
+
+        // --- 4. Event Listener for Real-time Filtering ---
+        searchInput.addEventListener('input', (event) => {
+            const query = event.target.value.toLowerCase();
+
+            // Filter the original array
+            const filtered = products.filter(item => 
+                item.toLowerCase().includes(query)
+            );
+
+            // Update the UI
+            renderList(filtered);
+        });
+
+        // Initial Load: Show all products
+        renderList(products);
+    </script>
+</body>
+</html>
