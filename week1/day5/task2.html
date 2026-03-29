@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5 - Problem 2</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; line-height: 1.6; }
+        .container { border: 2px solid #333; padding: 20px; border-radius: 10px; width: 300px; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; cursor: pointer; border-radius: 5px; }
+        button:hover { background-color: #0056b3; }
+        p { font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>User Information</h2>
+        
+        <button onclick="handleUserDisplay()">Show User Details</button>
+
+        <p id="p_name">Name: </p>
+        <p id="p_age">Age: </p>
+        <p id="p_city">City: </p>
+    </div>
+
+    <script>
+        // Requirement: Create a JavaScript object 'user'
+        const user = {
+            name: "Rahul",
+            age: 25,
+            city: "Hyderabad"
+        };
+
+        // Requirement: Function should not use global variables directly
+        // Requirement: Accepts the object as a parameter
+        function displayUserInfo(userObj) {
+            
+            // Technical Constraint: Object properties must be accessed using dot notation
+            // Technical Constraint: DOM elements should be updated dynamically
+            document.getElementById("p_name").innerText = "Name: " + userObj.name;
+            document.getElementById("p_age").innerText = "Age: " + userObj.age;
+            document.getElementById("p_city").innerText = "City: " + userObj.city;
+        }
+
+        // Helper function to trigger the main logic
+        function handleUserDisplay() {
+            displayUserInfo(user);
+        }
+    </script>
+
+</body>
+</html>
