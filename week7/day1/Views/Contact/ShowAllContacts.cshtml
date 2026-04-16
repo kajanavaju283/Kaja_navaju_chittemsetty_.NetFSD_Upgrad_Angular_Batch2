@@ -1,0 +1,41 @@
+﻿@model List<AppDemo.Models.ContactInfo>
+
+<html>
+
+    <head>
+
+        <title>Product Details</title>
+
+    </head>
+    <body>
+
+
+        <table border="1">
+    <tr>
+            <th>ID</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>CompanyName</th>
+            <th>EmailId</th>
+            <th>MobileNo</th>
+            <th>Designation</th>
+    </tr>
+        @foreach(var contact in Model)
+            {
+                <tr>
+
+                    <td>Id : @contact.ContactId</td>
+                    <td>FirstName : @contact.FirstName</td>
+                <td>LastName : @contact.LastName</td>
+                <td>CompanyName : @contact.CompanyName</td>
+                <td>EmailId : @contact.EmailId</td>
+                <td>MobileNo : @contact.MobileNo</td>
+                <td>Designation : @contact.Designation</td>
+
+                </tr>
+            }
+        </table>
+
+
+    </body>
+</html>
